@@ -14,3 +14,8 @@
   - [Jupiter Notebook](https://github.com/dj1vs/ml/blob/main/rk/rk-1.ipynb)
   - [PDF](https://github.com/dj1vs/ml/blob/main/rk/rk1.pdf)
 - 2
+  - [Jupiter Notebook](https://github.com/dj1vs/ml/blob/main/rk/rk-2.ipynb)
+  - [PDF](https://github.com/dj1vs/ml/blob/main/rk/rk2.pdf)
+
+## НИР
+  - [Jupiter Notebook](https://github.com/dj1vs/ml/blob/main/nir/main.ipynb)
