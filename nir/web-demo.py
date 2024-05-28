@@ -37,10 +37,10 @@ def get_model_pred(x_train, y_train, x_test, mss, msl, ne):
     rfr.fit(x_train, y_train)
     return rfr.predict(x_test)
 
-def draw_graph(x_train, x_test, y_train, y_test, mss, msl):
+def draw_graph(x_train, x_test, y_train, y_test, mss, msl, ne_step, ne_range):
     x_line = []
     y_line = []
-    for i in range (1, 100, 5):
+    for i in range (ne_range[0], ne_range[1], ne_step):
         pred  = get_model_pred(x_train, y_train, x_test, mss, msl, i)
         sc = mean_absolute_error(pred, y_test)
         x_line.append(i)
@@ -79,11 +79,13 @@ $dl$.
 
 if st.checkbox('Описание гиперпараметров и метрик'):
     st.markdown("""
-            Для оценки качеста модели используется средняя абсолютная погрешность (**mean_absolute_error**)
+            Для оценки качеста модели используется средняя абсолютная погрешность (**mean_absolute_error**).
 
             Можно изменить гиперпараметры модели:
             - **min_samples_leaf**: определяет количество сэмплов, которое должно быть у ноды-листка
             - **min_samples_split**: определяет количество сэмплов, которое нужно, чтобы разделить внутренний узел.
+                
+            С учётом этих гиперпараметров на графике рассчитывается качество моделей для главного гиперпараметра `n_estimators` (количнство деревьев).
             """)
     
 data = load_data()
@@ -97,9 +99,15 @@ if st.checkbox('Корреляционная матрица'):
 
 x_train, x_test, y_train, y_test = split_data(data)
 
+st.sidebar.subheader('Гиперпараметры')
 mss_slider = st.sidebar.slider('mean samples split: ', min_value = 1, max_value = 10, value=2, step=1)
 msl_slider = st.sidebar.slider('mean_samples_leaf: ', min_value = 1, max_value = 10, value = 1, step = 1)
 
-draw_graph(x_train, x_test, y_train, y_test, mss_slider, msl_slider)
+st.sidebar.subheader('Конфигурация графика')
+ne_step = st.sidebar.slider('Шаг при построении графика: ', min_value = 1, max_value = 25, value = 10, step = 1)
+ne_range = st.sidebar.slider('Диапазон количетсва деревьев на графике: ', min_value = 1, max_value = 300, value = (1, 100), step = 1)
+
+
+draw_graph(x_train, x_test, y_train, y_test, mss_slider, msl_slider, ne_step, ne_range)
 
 
